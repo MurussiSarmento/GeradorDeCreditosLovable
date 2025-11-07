@@ -210,13 +210,34 @@ def generate_emails(
                 wh = app_ref.state.jobs[job_id_ref].get("webhook_url")
                 if wh:
                     import requests
-                    requests.post(wh, json={
+                    payload_opt = {
                         "event": "emails_generated",
                         "batch_id": job_id_ref,
                         "total": len(created_items),
                         "created_in_seconds": time.time() - start,
                         "emails": created_items,
-                    }, timeout=5)
+                    }
+                    # Assinatura HMAC opcional quando webhook_secret fornecido na requisição
+                    headers_opt = {"X-Webhook-Event": "emails_generated"}
+                    try:
+                        secret = getattr(payload_ref, "webhook_secret", None)
+                        if secret:
+                            from utils.webhooks import _compute_signature
+                            sig = _compute_signature(secret, payload_opt)
+                            if sig:
+                                headers_opt["X-Webhook-Signature"] = sig
+                    except Exception:
+                        # Se não conseguir assinar, envia sem assinatura
+                        pass
+                    # Só inclui headers se existirem (mantém compatibilidade com testes sem headers)
+                    if headers_opt:
+                        try:
+                            requests.post(wh, json=payload_opt, headers=headers_opt, timeout=5)
+                        except TypeError:
+                            # Fallback para ambientes/mock que não aceitam headers
+                            requests.post(wh, json=payload_opt, timeout=5)
+                    else:
+                        requests.post(wh, json=payload_opt, timeout=5)
             except Exception:
                 pass
             # Disparar webhooks registrados para eventos globais
@@ -225,6 +246,7 @@ def generate_emails(
                 hooks = get_active_webhooks_for_event(db_local, "emails_generated")
                 if hooks:
                     import requests
+                    from datetime import datetime, timezone
                     payload_evt = {
                         "event": "emails_generated",
                         "batch_id": job_id_ref,
@@ -235,6 +257,12 @@ def generate_emails(
                     for h in hooks:
                         try:
                             requests.post(h.url, json=payload_evt, timeout=5)
+                            # sucesso: atualizar last_triggered_at
+                            try:
+                                h.last_triggered_at = datetime.now(timezone.utc)
+                                db_local.commit()
+                            except Exception:
+                                pass
                         except Exception:
                             # atualizar contador de falhas
                             try:

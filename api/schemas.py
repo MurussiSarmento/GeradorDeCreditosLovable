@@ -72,6 +72,7 @@ class GenerateEmailsRequest(BaseModel):
     auto_delete_seconds: Optional[int] = Field(default=None, ge=300, le=86400)
     sync: bool = Field(default=False, description="Executa criação de forma síncrona e retorna resultado")
     webhook_url: Optional[str] = Field(default=None, description="URL para notificação via webhook ao concluir")
+    webhook_secret: Optional[str] = Field(default=None, description="Segredo opcional para assinatura HMAC do webhook opcional")
 
 
 class GenerateEmailsResponse(BaseModel):

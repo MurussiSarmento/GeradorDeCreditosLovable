@@ -114,6 +114,12 @@ Response (429 Too Many Requests):
 **Query Parameters (opcional):**
 - `sync`: bool (default false) - Esperar conclusão antes de retornar
 - `webhook_url`: string - Notificar quando concluir
+ - `webhook_secret`: string (opcional) - Se fornecido junto com `webhook_url`, a notificação opcional inclui cabeçalhos `X-Webhook-Event: emails_generated` e `X-Webhook-Signature` (HMAC-SHA256 do corpo com o segredo)
+
+Nota sobre assinatura do webhook opcional:
+- Quando `webhook_secret` é enviado no corpo da requisição de `POST /emails/generate` junto com `webhook_url`, a chamada ao webhook opcional é assinada via HMAC-SHA256.
+- O cálculo segue o mesmo formato dos webhooks registrados: assinatura do JSON serializado (`separators=(",", ":")`, UTF-8), usando o segredo informado.
+- Se `webhook_secret` não for enviado, o webhook opcional é chamado sem assinatura. Em todos os casos, o cabeçalho `X-Webhook-Event: emails_generated` é incluído quando suportado.
 
 ### 2.2 Listar Todos os Emails
 ```
