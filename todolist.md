@@ -80,6 +80,10 @@ Pronto quando:
 - [x] Atualizar `last_triggered_at` em sucesso e incrementar `failures` em erro
 - [x] Testes unitários para entrega, assinatura e falhas de webhooks
 - [x] Documentar payload e cabeçalhos de `message.received` em `API_ENDPOINTS.md`
+ - [x] Assinatura HMAC opcional no webhook de `POST /emails/generate` via `webhook_secret` (inclui `X-Webhook-Event: emails_generated` e `X-Webhook-Signature` quando presente)
+ - [x] Documentar `webhook_secret` e cabeçalhos do webhook opcional em `API_ENDPOINTS.md`
+ - [x] Atualizar métricas de webhooks globais `emails_generated` (setar `last_triggered_at` em sucesso, incrementar `failures` em erro)
+ - [ ] Criar teste unitário para `POST /emails/generate` com `webhook_secret`, validando `X-Webhook-Signature`
 
 ## Fase 3: API Completa (Semana 3)
 - [ ] Implementar todos endpoints de `API_ENDPOINTS.md` (emails, messages, codes, webhooks, auth, health)
