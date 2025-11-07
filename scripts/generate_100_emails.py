@@ -98,13 +98,37 @@ def main():
     data = resp.json()
     emails = [item["email"] for item in data.get("emails", [])]
 
-    # Grava em arquivo
+    # Grava em arquivo TXT e CSV (com senhas do cliente dummy)
     out_path = Path("data/generated_100_emails.txt")
+    csv_path = Path("data/generated_100_emails.csv")
+
+    # As senhas são fixas (cliente dummy usa "pass"). Em produção, senhas são aleatórias e não retornadas pela API.
+    default_password = "pass"
+
     with out_path.open("w", encoding="utf-8") as f:
         for e in emails:
             f.write(e + "\n")
+        f.write("\n")
+        f.write("# Instruções de teste manual\n")
+        f.write("# 1) Defina a chave da API nesta sessão:\n")
+        f.write("#    $env:API_KEY=\"test-key\"\n")
+        f.write("# 2) Inicie o servidor:\n")
+        f.write("#    python main.py\n")
+        f.write("# 3) Gere emails via API (opcional):\n")
+        f.write("#    curl.exe -s -X POST \"http://localhost:8000/emails/generate\" -H \"Content-Type: application/json\" -H \"x-api-key: test-key\" -d '{\"quantity\": 100, \"sync\": true}'\n")
+        f.write("# 4) Liste emails (ordenados por email ascendente):\n")
+        f.write("#    curl.exe -s \"http://localhost:8000/emails?sort_by=email&order=asc\" -H \"x-api-key: test-key\"\n")
+        f.write("# 5) Busque por substring (domínio ou email):\n")
+        f.write("#    curl.exe -s \"http://localhost:8000/emails?search=mail.tm\" -H \"x-api-key: test-key\"\n")
+        f.write("# Observação: As senhas no arquivo CSV associado são \"pass\" (cliente dummy). Em produção, as senhas são armazenadas criptografadas e não são retornadas pela API.\n")
 
-    print(f"Gerados {len(emails)} emails. Arquivo: {out_path}")
+    # CSV com pares email,senha
+    with csv_path.open("w", encoding="utf-8") as cf:
+        cf.write("email,password\n")
+        for e in emails:
+            cf.write(f"{e},{default_password}\n")
+
+    print(f"Gerados {len(emails)} emails. Arquivos: {out_path}, {csv_path}")
 
 
 if __name__ == "__main__":
