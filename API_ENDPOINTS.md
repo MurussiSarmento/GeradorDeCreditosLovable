@@ -463,27 +463,63 @@ Response (204 No Content):
 (empty body)
 ```
 
-### 5.4 Webhook Payload Exemplo
+### 5.4 Webhook Payloads e Assinatura
 
-Quando um evento ocorre, POST é feito para URL registrada:
+Quando um evento ocorre, um POST é feito para a URL registrada. Os cabeçalhos incluem:
+
+- `X-Webhook-Event`: nome do evento
+- `X-Webhook-Signature` (opcional): HMAC-SHA256 do corpo JSON usando `secret_key` do webhook, em formato hex
+
+Exemplo de payload para `message.received`:
 
 ```
 POST https://your-app.com/webhook
-X-Webhook-Signature: sha256=...
+X-Webhook-Event: message.received
+X-Webhook-Signature: <hex hmac sha256>
 Content-Type: application/json
 
 {
-  "event": "code_extracted",
-  "timestamp": "2025-11-06T20:30:00Z",
-  "data": {
-    "email": "abc123def@mail.tm",
-    "message_id": "msg-uuid-1",
-    "code": "123456",
-    "code_type": "otp_6digit",
-    "message_subject": "Verify your email"
-  }
+  "event": "message.received",
+  "email": "abc123def@mail.tm",
+  "message_id": "msg-uuid-1",
+  "subject": "Welcome",
+  "sender": "noreply@example.com",
+  "received_at": "2025-11-06T19:50:00Z",
+  "preview": "Hello and welcome"
 }
 ```
+
+Exemplo de payload para `emails_generated` (quando geração síncrona ou job completa):
+
+```
+POST https://your-app.com/webhook
+X-Webhook-Event: emails_generated
+X-Webhook-Signature: <hex hmac sha256>
+Content-Type: application/json
+
+{
+  "event": "emails_generated",
+  "batch_id": "batch-uuid-123",
+  "total": 10,
+  "created_in_seconds": 45.23,
+  "emails": [
+    {
+      "email": "abc123def@mail.tm",
+      "account_id": "mail-tm-id-1",
+      "domain": "mail.tm",
+      "token": "auth-token-1",
+      "status": "active",
+      "created_at": 1730912700.123
+    }
+  ]
+}
+```
+
+Assinatura HMAC:
+- Algoritmo: SHA256
+- Mensagem: corpo JSON exato enviado (minificado)
+- Chave: `secret_key` definida no registro do webhook
+- Header: `X-Webhook-Signature: <hexdigest>`
 
 ---
 
