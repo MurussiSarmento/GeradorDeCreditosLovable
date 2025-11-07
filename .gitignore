@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.DS_Store
+
+# Virtualenv
+.venv/
+env/
+venv/
+
+# Logs and data
+logs/
+data/emails.db
+data/backups/
+
+# Build
+dist/
+build/
+*.spec
