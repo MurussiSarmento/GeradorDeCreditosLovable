@@ -79,7 +79,7 @@ Pronto quando:
 - [x] Utilitário de disparo com assinatura HMAC (`X-Webhook-Signature`)
 - [x] Atualizar `last_triggered_at` em sucesso e incrementar `failures` em erro
 - [x] Testes unitários para entrega, assinatura e falhas de webhooks
-- [ ] Documentar payload e cabeçalhos de `message.received` em `API_ENDPOINTS.md`
+- [x] Documentar payload e cabeçalhos de `message.received` em `API_ENDPOINTS.md`
 
 ## Fase 3: API Completa (Semana 3)
 - [ ] Implementar todos endpoints de `API_ENDPOINTS.md` (emails, messages, codes, webhooks, auth, health)
