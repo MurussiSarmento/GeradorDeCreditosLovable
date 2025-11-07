@@ -87,6 +87,9 @@ Pronto quando:
 
 ## Manutenção de testes
 - [x] Agrupar testes de geração de emails (`sync` e `webhook_secret`) em um único arquivo
+- [x] Agrupar testes de listagem e busca/ordenação de emails em um único arquivo
+- [x] Agrupar testes offline de mensagens (lista e detalhe) em um único arquivo
+- [x] Agrupar testes de Telegram (formatação, notificações, preview) em um único arquivo
 
 ## Fase 3: API Completa (Semana 3)
 - [ ] Implementar todos endpoints de `API_ENDPOINTS.md` (emails, messages, codes, webhooks, auth, health)
