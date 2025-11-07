@@ -85,6 +85,9 @@ Pronto quando:
 - [x] Atualizar métricas de webhooks globais `emails_generated` (setar `last_triggered_at` em sucesso, incrementar `failures` em erro)
  - [x] Criar teste unitário para `POST /emails/generate` com `webhook_secret`, validando `X-Webhook-Signature`
 
+## Manutenção de testes
+- [x] Agrupar testes de geração de emails (`sync` e `webhook_secret`) em um único arquivo
+
 ## Fase 3: API Completa (Semana 3)
 - [ ] Implementar todos endpoints de `API_ENDPOINTS.md` (emails, messages, codes, webhooks, auth, health)
   - [x] `GET /emails` listar com paginação, filtros, busca e ordenação
