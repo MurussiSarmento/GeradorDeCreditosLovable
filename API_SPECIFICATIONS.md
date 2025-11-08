@@ -482,3 +482,50 @@ logger.info(
 
 **Versão:** 1.0  
 **Última Atualização:** 2025-11-06
+
+---
+
+## Agendador de Proxies (Scheduler)
+
+### Variáveis de Ambiente
+
+Defina no `.env` para habilitar e configurar o agendador periódico:
+
+```
+PROXY_SCHEDULER_ENABLED=false
+PROXY_SCHEDULER_VALIDATE_EVERY_MINUTES=30
+PROXY_SCHEDULER_SCRAPE_EVERY_MINUTES=60
+PROXY_SCHEDULER_VALIDATE_MAX_COUNT=200
+PROXY_SCHEDULER_SCRAPE_QUANTITY=200
+
+# Limites específicos para rotas de proxies (opcionais)
+# Se não definidos, o middleware usa os limites globais
+# `API_RATE_LIMIT_IP` e `API_RATE_LIMIT_KEY`
+PROXIES_RATE_LIMIT_IP=
+PROXIES_RATE_LIMIT_KEY=
+PROXIES_MAX_CONCURRENCY=
+
+# Validador de Proxies (opcional)
+# Controla heurísticas e provedores usados nas verificações do validador
+# Modo de detecção de anonimato: "basic" (padrão) ou "enhanced"
+ANONYMITY_DETECTION_MODE=basic
+# Provedor de geolocalização: "ip-api" (padrão), "ipapi", ou "ipinfo"
+GEO_PROVIDER=ip-api
+```
+
+### Endpoints
+
+- `GET /api/v1/proxies/scheduler/status` — Status atual do agendador.
+- `POST /api/v1/proxies/scheduler/update` — Atualiza configuração e liga/desliga.
+
+### Comportamento
+
+- Quando `enabled` é `true`, um thread em background inicia o loop de validação e scraping nos intervalos configurados.
+- Quando `enabled` é `false`, o agendador interrompe o loop e marca `running=false`.
+- Os valores retornados incluem `last_validate_at` e `last_scrape_at` quando há execuções recentes.
+- O status é enriquecido com métricas dos últimos jobs executados:
+  - `last_validate_metrics`: `{ job_id, duration_seconds, total_tested, valid, invalid, success_rate }`
+  - `last_scrape_metrics`: `{ job_id, duration_seconds, total_found, saved, by_source }`
+    - `by_source` é um mapa `fonte -> quantidade` agregando os proxies encontrados por fonte.
+  - Campos adicionais (se disponíveis):
+    - `last_validate_metrics.avg_response_time_ms_valid`: média de latência dos proxies válidos durante o último job.

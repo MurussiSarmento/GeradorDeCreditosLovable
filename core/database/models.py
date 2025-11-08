@@ -1,5 +1,5 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, String, DateTime, Integer, Boolean, Text
+from sqlalchemy import Column, String, DateTime, Integer, Boolean, Text, Float
 from datetime import datetime, timezone
 
 
@@ -48,3 +48,20 @@ class Webhook(Base):
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     last_triggered_at = Column(DateTime, nullable=True)
     failures = Column(Integer, default=0)
+
+
+class Proxy(Base):
+    __tablename__ = "proxies"
+
+    id = Column(String, primary_key=True)
+    ip = Column(String, nullable=False)
+    port = Column(Integer, nullable=False)
+    protocol = Column(String, nullable=False)  # http, https, socks4, socks5
+    country = Column(String, nullable=True)
+    source = Column(String, nullable=True)
+    valid = Column(Boolean, default=False)
+    anonymity = Column(String, nullable=True)  # transparent, anonymous, elite
+    last_checked = Column(DateTime, nullable=True)
+    avg_response_time_ms = Column(Float, nullable=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    last_updated = Column(DateTime, default=lambda: datetime.now(timezone.utc))

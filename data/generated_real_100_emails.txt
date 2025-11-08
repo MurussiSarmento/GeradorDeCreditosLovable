@@ -1,19 +1,12 @@
-nupad8bp4074ve2n@2200freefonts.com
-tah10a1ibyjx0s2n@2200freefonts.com
-7ksg6iiu2j89fp@2200freefonts.com
-dkvt0kp6a6yfd9g@2200freefonts.com
-y9tlr53z1bsci02q@2200freefonts.com
-nxgb7kk5p22x@2200freefonts.com
-81lakv3r6iq9xa0@2200freefonts.com
-i8jky3h16kqe8@2200freefonts.com
-xhd14gzvulbl5@2200freefonts.com
-3e2pd40vozmy@2200freefonts.com
-oo9uhvb2951ig@2200freefonts.com
-6x1glwmjfnivpzwe@2200freefonts.com
+u4z2t83uww6oh9@2200freefonts.com
+6p9vxw4lae87yytl@2200freefonts.com
+7s0zvs2fqv2xmg7n@2200freefonts.com
+h4fq1aymginfkt7@2200freefonts.com
+ol5221p8tz38@2200freefonts.com
 
 # Instruções de teste manual
 # 1) Inicie o servidor: python main.py
-# 2) Liste e-mails: curl.exe -s "http://localhost:8000/emails?sort_by=email&order=asc" -H "x-api-key: test-key"
-# 3) Mensagens: curl.exe -s "http://localhost:8000/messages/<email>" -H "x-api-key: test-key"
+# 2) Liste e-mails: curl.exe -s "http://localhost:8000/emails?sort_by=email&order=asc" -H "x-api-key: fb1d6f4872654147bdae16f9bea01532248c9bf24e66461897e8d62f8ce8de0b"
+# 3) Mensagens: curl.exe -s "http://localhost:8000/messages/<email>" -H "x-api-key: fb1d6f4872654147bdae16f9bea01532248c9bf24e66461897e8d62f8ce8de0b"
 #    (Use o e-mail exibido no arquivo TXT para substituir <email>)
 # Observação: As senhas reais estão no CSV. No DB, ficam criptografadas quando FERNET_KEY está definido.

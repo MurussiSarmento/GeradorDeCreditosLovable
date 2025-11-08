@@ -705,3 +705,57 @@ curl -X GET http://localhost:5000/api/v1/emails \
 
 **Versão:** 1.0  
 **Última Atualização:** 2025-11-06
+
+---
+
+## 7. PROXIES - `/proxies`
+
+### 7.1 Status do Agendador
+```
+GET /proxies/scheduler/status
+Authorization: Bearer {token}
+
+Response (200 OK):
+{
+  "enabled": false,
+  "validate_interval_min": 30,
+  "scrape_interval_min": 60,
+  "validate_batch_size": 200,
+  "scrape_quantity": 200,
+  "last_validate_at": null,
+  "last_scrape_at": null,
+  "running": false
+}
+```
+
+**Descrição:** Consulta o estado atual do agendador periódico de validação e scraping de proxies.
+
+### 7.2 Atualizar Configuração do Agendador
+```
+POST /proxies/scheduler/update
+Authorization: Bearer {token}
+Content-Type: application/json
+
+Request:
+{
+  "enabled": true,
+  "validate_interval_min": 10,
+  "scrape_interval_min": 30,
+  "validate_batch_size": 100,
+  "scrape_quantity": 150
+}
+
+Response (200 OK):
+{
+  "enabled": true,
+  "validate_interval_min": 10,
+  "scrape_interval_min": 30,
+  "validate_batch_size": 100,
+  "scrape_quantity": 150,
+  "last_validate_at": null,
+  "last_scrape_at": null,
+  "running": true
+}
+```
+
+**Descrição:** Atualiza os parâmetros do agendador. Quando `enabled` é `true`, o agendador é iniciado; quando `false`, é interrompido.

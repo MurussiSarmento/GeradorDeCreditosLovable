@@ -1,0 +1,113 @@
+batch1@mail.tm
+batch2@mail.tm
+batch3@mail.tm
+batch4@mail.tm
+batch5@mail.tm
+batch6@mail.tm
+batch7@mail.tm
+batch8@mail.tm
+batch9@mail.tm
+batch10@mail.tm
+batch11@mail.tm
+batch12@mail.tm
+batch13@mail.tm
+batch14@mail.tm
+batch15@mail.tm
+batch16@mail.tm
+batch17@mail.tm
+batch18@mail.tm
+batch19@mail.tm
+batch20@mail.tm
+batch21@mail.tm
+batch22@mail.tm
+batch23@mail.tm
+batch24@mail.tm
+batch25@mail.tm
+batch26@mail.tm
+batch27@mail.tm
+batch28@mail.tm
+batch29@mail.tm
+batch30@mail.tm
+batch31@mail.tm
+batch32@mail.tm
+batch33@mail.tm
+batch34@mail.tm
+batch35@mail.tm
+batch36@mail.tm
+batch37@mail.tm
+batch38@mail.tm
+batch39@mail.tm
+batch40@mail.tm
+batch41@mail.tm
+batch42@mail.tm
+batch43@mail.tm
+batch44@mail.tm
+batch45@mail.tm
+batch46@mail.tm
+batch47@mail.tm
+batch48@mail.tm
+batch49@mail.tm
+batch50@mail.tm
+batch51@mail.tm
+batch52@mail.tm
+batch53@mail.tm
+batch54@mail.tm
+batch55@mail.tm
+batch56@mail.tm
+batch57@mail.tm
+batch58@mail.tm
+batch59@mail.tm
+batch60@mail.tm
+batch61@mail.tm
+batch62@mail.tm
+batch63@mail.tm
+batch64@mail.tm
+batch65@mail.tm
+batch66@mail.tm
+batch67@mail.tm
+batch68@mail.tm
+batch69@mail.tm
+batch70@mail.tm
+batch71@mail.tm
+batch72@mail.tm
+batch73@mail.tm
+batch74@mail.tm
+batch75@mail.tm
+batch76@mail.tm
+batch77@mail.tm
+batch78@mail.tm
+batch79@mail.tm
+batch80@mail.tm
+batch81@mail.tm
+batch82@mail.tm
+batch83@mail.tm
+batch84@mail.tm
+batch85@mail.tm
+batch86@mail.tm
+batch87@mail.tm
+batch88@mail.tm
+batch89@mail.tm
+batch90@mail.tm
+batch91@mail.tm
+batch92@mail.tm
+batch93@mail.tm
+batch94@mail.tm
+batch95@mail.tm
+batch96@mail.tm
+batch97@mail.tm
+batch98@mail.tm
+batch99@mail.tm
+batch100@mail.tm
+
+# Instruções de teste manual
+# 1) Defina a chave da API nesta sessão:
+#    $env:API_KEY="test-key"
+# 2) Inicie o servidor:
+#    python main.py
+# 3) Gere emails via API (opcional):
+#    curl.exe -s -X POST "http://localhost:8000/emails/generate" -H "Content-Type: application/json" -H "x-api-key: test-key" -d '{"quantity": 100, "sync": true}'
+# 4) Liste emails (ordenados por email ascendente):
+#    curl.exe -s "http://localhost:8000/emails?sort_by=email&order=asc" -H "x-api-key: test-key"
+# 5) Busque por substring (domínio ou email):
+#    curl.exe -s "http://localhost:8000/emails?search=mail.tm" -H "x-api-key: test-key"
+# Observação: As senhas no arquivo CSV associado são "pass" (cliente dummy). Em produção, as senhas são armazenadas criptografadas e não são retornadas pela API.
